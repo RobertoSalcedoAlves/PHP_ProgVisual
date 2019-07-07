@@ -1,0 +1,27 @@
+<html><body>
+<br />
+<h3><center>Nesta GRID voce define componentes e as validacoes para campos do formulario.</center></h3>
+<h3><center>A GRID eh editavel basta clicar nas celulas.</center></h3><br />
+<h2>Escolha o campo chave:</h2><br />
+<li><b>Campo Chave</b>: O primeiro campo da tabela foi definido como campo chave para manutencao dos registros, verifique se eh o campo com chave 
+da sua tabela, caso nao seja, defina o campo chave correto.</li><br />
+<h2><center>Configure as Colunas da Grid e os campos que serao exibidos no formulario, para isso criei a Grid acima com algumas opcoes, existem muitas outras configuracoes para cada componente,
+para utilizar outras configuracoes que nao estao nesta Grid, voce deve adicionar manualmente, para isso gere o modulo e edite os arquivos ".json" na pasta ./php/json do aplicativo gerado.</center></h2><br />
+<li><b>Column:</b>(Colunas da GRID e Campos do Formulario)-> Todos os campos da tabela serao exibidos na GRID e no Formulario do CRUD, mas voce pode desmarcar os campos que voce
+nao quer que apareca, pelo menos um campo deve ser escolhido.</center></li>
+<li><b>key:</b>(Campo chave da Tabela)-> Esta coluna foi adicionada para que o usuario possa ver qual o campo chave da tabela que pretende gerar o CRUD.</li>
+<li><b>fieldlabel:</b>(Rotulo do Campo)-> Nesta coluna voce pode alterar o rotulo do campo que aparecera no formulario, de dois cliques para editar.</li>
+<li><b>xtype:</b>(Componente Extjs)-> Nesta coluna voce pode escolher qual o componente vai aparecer no formulario, por padrao esta o "textfield"
+mas voce pode mudar para um outro componente que esta na lista, de dois cliques para abrir a lista.</li>
+<li><b>store:</b>(Lista de Opcoes para seu Combobox)-> Se voce escolheu o componente "combobox". Nesta coluna voce pode atribuir uma lista de opcoes para o seu "combo" basta escolher um opcao, digitar ou colar um texto 
+no formato ["opc1","opc2","opc3"].</li>
+<li><b>vtype:</b>(Validador Para seu componente)-> Nesta coluna voce pode definir um validador para o campo exemplo "email", "url" ou pode ser digitado outro desde que
+seja suportado pelo Extjs 4 veja na documentacao do Extjs em http://docs.sencha.com.</li>
+<li><b>width:</b>(Largura visual do componente)-> Nesta coluna voce pode definir o largura do campo no formulario por padrao foi colocado 400, mas pode ser alterado,
+de dois cliques e digite a largura desejada.</li>
+<li><b>plugin:</b>(Plugins que estao na pasta "Ux")-> Escolha um plugin para utilizar no formulario exemplo: letras maiuscula [new Ux.Uppercase()], mascaras de entrada de cpf/cnpj/cep/fone [new Ux.InputTextMask(999.999.999-99)]</li>
+<li><b>hidden:</b>(Esconde o componente no formulario)-> Defina como "true" se nao quiser que este campo apareca no formulario.</li>
+<li><b>allowBlank:</b>(Obriga ou nao o preenchimento do campo no formulario)-> Se esta configuracao se for definida como "false", o preenchimento do campo no formulario sera obrigatorio.</li>
+<li><b>readOnly:</b>(Deixa componente para somente leitura)-> Se esta comfiguracao se for definida como "true", o campo fica somente leitura no formulario.</li>
+<li><b>maxLength:</b>(Quantidade maxima de caracteres para o preenchimento do campo no formulario)-> Defina a quantidade maxima de caracteres para preenchimento dos campos no formulario.</li>
+</body></html>

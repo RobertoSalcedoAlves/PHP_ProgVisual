@@ -1,0 +1,87 @@
+/*
+ APLICATIVO GERADOR CRUD ExtJs/Php/Mysql.
+ Desenvolvido por AMARILDO DIAS
+ dias@dias.adm.br
+ http://www.dias.adm.br 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, version 3.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ <http://www.gnu.org/licenses/>.
+*/
+
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+* O SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO.
+
+<<O APLICATIVO ESTA CONFIGURADO PARA FUNCIONAR NA VERSAO 5.3 DO PHP>>
+<<SE O SEU PHP FOR DE VERSAO MENOR QUE 5.3, INFORME NO ARQUIVO "Config.php">>
+
+Para instalar -> basta descompactar os arquivos no seu Wamp ou na pasta www do seu servidor.
+
+No arquivo "tabela.sql" tem a sql para criar a tabela que foi utilizada no gerador crud.
+
+No Arquivo "Config.php" coloque os dados da conexao mysql
+No arquivo "Config.json" estão as configuracoes do formulario (NAO ALTERE estas configuracoes 
+foi gerada pelo gerador crud de acordo com as escolhas na base mysql).
+
+A Estrutura de pastas ficara assim:
+------------------------------------------------------------------------------
+crud_00000
+->app
+	->MyApp.js
+->model
+	->MyDados.js
+->Store
+	->StoreConfig.js
+	->StoreGrid.js
+->view
+	->layout
+		->MyView.js
+	->MyForm.js
+	->MyFunc.js
+	->MyGrid.js
+	->MyWin.js
+->php
+	->Config.json  
+	->Config.php 
+	->Delete.php
+	->Insert.php
+	->Select.php
+	->Update.php
+->resources
+	->html
+		->images
+		->logo.png
+		->logoform.html
+		->rodape.html
+->Ux
+	->CnpjField.js
+	->CpfField.js
+	->FieldMoney.js
+	->Uppercase.js	
+app.js
+tabela.sql
+index.html
+leia.txt	
+	
+------------------------------------------------------------------------------	
+Os arquivos "Config.json" e "Config.php" são os que contém as configurações 
+do crud gerados a partir das escolhas na base da dos Mysql os demais arquivos são cópias, 
+ou seja, são iguais em todos os CRUD Gerados no aplicativo Gerador Crud.
+
+O aplicativo Gerador crud gera apenas as configurações do crud.
+As configurações geradas estão nos arquivos:
+Config.php -> Dados para conexao e consulta sql.
+Config.json -> Dados para montar o formulario.
+Voce pode alterar essas configurações como quizer, mas veja que os dois arquivos tem 
+dados que dependem um do outro para montar a GRID e o FORMULARIO.
+
+
+Boa Sorte.
+
+Amarildo dias
+dias@dias.adm.br
+

@@ -1,0 +1,8 @@
+<html><body>
+<h3>As validacoes dos campos acima dependem das escolhas feitas na primeira tela, para alterar volte e clique em "Redefinir GRID" e refaca as escolhas.</h3></br>
+<h2>Mensagem:</h2>
+<li>1-Exemplo: Os campos com " * " sao de preenchimento obrigatorio.</li>
+<li>2-Outra mensagem.</li>
+<li>3-Para alterar esta mensagem edite o arquivo "/resources/html/mensagemform.html".</li>
+<li>4-Para alterar logo edite o arquivo "/resources/html/logo.html", e aponte para outra imagem.</li>
+</body></html>

@@ -1,0 +1,20 @@
+<html><body>
+<h3><center>Aplicativo Gerador MULTI_CRUD --> Dias_Multi_Crud_v01 - Versao de Testes</center></h3><br />
+<h3><center>NAO Funciona no "ie" -> UTILIZE O "firefox" OU O "chrome"</center></h3><br />
+<h2><center>Este projeto tem por objetivo gerar um CRUD funcional com base em escolhas em base de dados Mysql.</center></h2><br />
+<h2>Opcoes para conexao:</h2><br />
+<li>1-Antes de iniciar configure os dados da conexao no arquivo "Dias_Crud_v01/php/Mydb/ConnDB.php" -> Ja esta configurado para TESTE.</li>
+<li>2-O Aplicativo eh auto-explicativo leia as mensagens que estao em cada tela.</li>
+<li>3-Esta versao e GPL v3.</li><br />
+<!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
+<li>Se o aplicativo for util para voce, aceito uma contribuicao para manter o projeto.   Obrigado :)</li>
+<form target="pagseguro" action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post">
+<input type="hidden" name="receiverEmail" value="dias@dias.adm.br" />
+<input type="hidden" name="currency" value="BRL" />
+<input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/120x53-doar.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+</form>
+<!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
+<li><a href="mailto:dias@dias.adm.br">Enviem criticas ou sugestoes para dias@dias.adm.br</a></li><br />
+<li><a href="http://www.dias.adm.br">As atualizacoes serao publicadas no meu site www.dias.adm.br</a></li><br />
+<li><a href="http://www.dias.adm.br">Estou desenvolvendo outros aplicativos acesse e se cadastre em www.dias.adm.br</a></li>
+</body></html>

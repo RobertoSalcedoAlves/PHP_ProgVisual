@@ -1,0 +1,11 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title id="page-title">Dias_Crud Application</title>
+        <link rel="stylesheet" type="text/css" href="/Dias_Multi_Crud/extjs/resources/css/ext-all-access.css">
+        <script type="text/javascript" src="/Dias_Multi_Crud/extjs/ext-all.js"></script>
+		<script type="text/javascript" src="./app.js"></script>
+    </head>
+    <body>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<html><body>
+<h3>Escolha e Configure nesta Grid os Campos que formarao a GRID e o formulario do CRUD.</h3><br />
+<h2>Escolha o campo chave:</h2><br />
+<li><b>Campo Chave</b>: Voce deve escolher o campo que sera utilizado para Atualizar ou Deletar registros da sua tabela, este campo
+ficara com propriedade de somente leitura no formulario, de preferencia deve ser um campo KEY PRI autoincrement, se a tabela tiver 
+um campo "id" por exemplo eh uma boa escolha, se quizer pode escolher outro campo mas atencao os comandos SQL utilizarao este campo 
+para deletar ou alterar um registro entao se o valor deste campo nao for unico as mudancas serao aplicadas em todos os campos cujo 
+campo chave tenha o valor igual ao escolhido</li><br />
+<h2>Configure as Colunas da Grid e os campos que serao exibidos no formulario, para isso criei a Grid acima com estas opcoes:</h2><br />
+<li><b>Campos (Column):</b> Nesta coluna voce deve escolher os campos de formarao as colunas que serao exibidas na Grid do CRUD, 
+pelo menos um campo deve ser escolhido.</li>
+<li><b>Rotulo (fieldlabel):</b> Nesta coluna voce pode alterar o rotulo do campo que aparecera no formulario, de dois cliques para editar.</li>
+<li><b>Componente (xtype):</b> Nesta coluna voce pode escolher qual o componente vai aparecer no formulario, por padrao esta o "textfield"
+mas voce pode mudar para um outro componente que esta na lista, de dois cliques para abrir a lista.</li>
+<li><b>Combo (store):</b> Nesta coluna voce pode atribuir uma lista de opcoes para o seu combo basta escolher um opcao, digitar ou colar um texto 
+no formato ["op1","op2","op3"].</li>
+<li><b>Validador (vtype):</b> Nesta coluna voce pode definir um validador para o campo exemplo "email", "url" ou pode ser digitado outro desde que
+faca parte do extjs4.</li>
+<li><b>Largura (width):</b> Nesta coluna voce pode definir o largura do campo no formulario por padrao foi colocado 400, mas pode ser alterado,
+de dois cliques e digite o comprimento desejado.</li>
+<li><b>Mascara (mask):</b> Esta opcao ainda nao esta funcionando, o objetivo e colocar algum plugin de mascaras e enviar para o formulario.</li>
+<li><b>Chave (key):</b> Esta coluna foi adicionada para que o usuario possa ver qual o campo chave da tabela que pretende gerar o CRUD.</li>
+<li><b>Nulo (allowBlank):</b> Esta propriedade sera automatica de acordo com o field do banco de dados, ou seja, se no banco de dados nao permitir 
+nulo "allowBlank" sera (false).</li>
+</body></html>
