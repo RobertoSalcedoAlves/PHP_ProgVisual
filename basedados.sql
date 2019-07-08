@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03-Jul-2019 às 07:46
+-- Tempo de geração: 08-Jul-2019 às 03:20
 -- Versão do servidor: 10.3.15-MariaDB
 -- versão do PHP: 7.3.6
 
@@ -25,10 +25,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbl_backups`
+-- Estrutura da tabela `tbl_backup`
 --
 
-CREATE TABLE `tbl_backups` (
+CREATE TABLE `tbl_backup` (
   `id` int(11) NOT NULL,
   `data` date NOT NULL,
   `nome` varchar(100) DEFAULT NULL
@@ -41,6 +41,7 @@ CREATE TABLE `tbl_backups` (
 --
 
 CREATE TABLE `tbl_backup_equipamento` (
+  `id` int(11) NOT NULL,
   `id_backup` int(11) NOT NULL,
   `id_equipamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -71,6 +72,7 @@ CREATE TABLE `tbl_configuracao` (
 --
 
 CREATE TABLE `tbl_configuracao_equipamento` (
+  `id` int(11) NOT NULL,
   `id_configuracao` int(11) NOT NULL,
   `id_equipamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -136,39 +138,6 @@ CREATE TABLE `tbl_pagina` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbl_perfil`
---
-
-CREATE TABLE `tbl_perfil` (
-  `id` int(11) NOT NULL,
-  `descricao` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `tbl_perfil_usuario`
---
-
-CREATE TABLE `tbl_perfil_usuario` (
-  `id_usuario` int(11) NOT NULL,
-  `id_perfil` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `tbl_permisao_perfil`
---
-
-CREATE TABLE `tbl_permisao_perfil` (
-  `id_perfil` int(11) NOT NULL,
-  `id_permissao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `tbl_permissao`
 --
 
@@ -184,6 +153,7 @@ CREATE TABLE `tbl_permissao` (
 --
 
 CREATE TABLE `tbl_permissao_pagina` (
+  `id` int(11) NOT NULL,
   `id_permissao` int(11) NOT NULL,
   `id_pagina` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -206,6 +176,7 @@ CREATE TABLE `tbl_rack` (
 --
 
 CREATE TABLE `tbl_rack_datacenter` (
+  `id` int(11) NOT NULL,
   `id_datacenter` int(11) NOT NULL,
   `IdRack` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -217,6 +188,7 @@ CREATE TABLE `tbl_rack_datacenter` (
 --
 
 CREATE TABLE `tbl_rack_equipamento` (
+  `id` int(11) NOT NULL,
   `id_rack` int(11) NOT NULL,
   `id_equipamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -233,7 +205,8 @@ CREATE TABLE `tbl_usuario` (
   `login` varchar(100) NOT NULL,
   `senha` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `telefone` varchar(20) NOT NULL
+  `telefone` varchar(20) NOT NULL,
+  `id_permissao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -241,9 +214,9 @@ CREATE TABLE `tbl_usuario` (
 --
 
 --
--- Índices para tabela `tbl_backups`
+-- Índices para tabela `tbl_backup`
 --
-ALTER TABLE `tbl_backups`
+ALTER TABLE `tbl_backup`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_backup` (`id`);
 
@@ -251,6 +224,7 @@ ALTER TABLE `tbl_backups`
 -- Índices para tabela `tbl_backup_equipamento`
 --
 ALTER TABLE `tbl_backup_equipamento`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_backup` (`id_backup`),
   ADD KEY `id_equipamento` (`id_equipamento`);
 
@@ -265,6 +239,7 @@ ALTER TABLE `tbl_configuracao`
 -- Índices para tabela `tbl_configuracao_equipamento`
 --
 ALTER TABLE `tbl_configuracao_equipamento`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_configuracao` (`id_configuracao`),
   ADD KEY `id_equipamento` (`id_equipamento`);
 
@@ -298,27 +273,6 @@ ALTER TABLE `tbl_pagina`
   ADD KEY `id_pagina` (`id`);
 
 --
--- Índices para tabela `tbl_perfil`
---
-ALTER TABLE `tbl_perfil`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_perfil` (`id`);
-
---
--- Índices para tabela `tbl_perfil_usuario`
---
-ALTER TABLE `tbl_perfil_usuario`
-  ADD KEY `id_perfil` (`id_perfil`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
--- Índices para tabela `tbl_permisao_perfil`
---
-ALTER TABLE `tbl_permisao_perfil`
-  ADD KEY `id_perfil` (`id_perfil`),
-  ADD KEY `id_permissao` (`id_permissao`);
-
---
 -- Índices para tabela `tbl_permissao`
 --
 ALTER TABLE `tbl_permissao`
@@ -329,7 +283,7 @@ ALTER TABLE `tbl_permissao`
 -- Índices para tabela `tbl_permissao_pagina`
 --
 ALTER TABLE `tbl_permissao_pagina`
-  ADD PRIMARY KEY (`id_permissao`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_permissao` (`id_permissao`),
   ADD KEY `id_pagina` (`id_pagina`);
 
@@ -344,6 +298,7 @@ ALTER TABLE `tbl_rack`
 -- Índices para tabela `tbl_rack_datacenter`
 --
 ALTER TABLE `tbl_rack_datacenter`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_rack` (`IdRack`),
   ADD KEY `id_datacenter` (`id_datacenter`);
 
@@ -351,6 +306,7 @@ ALTER TABLE `tbl_rack_datacenter`
 -- Índices para tabela `tbl_rack_equipamento`
 --
 ALTER TABLE `tbl_rack_equipamento`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_rack` (`id_rack`),
   ADD KEY `id_equipamento` (`id_equipamento`);
 
@@ -359,16 +315,23 @@ ALTER TABLE `tbl_rack_equipamento`
 --
 ALTER TABLE `tbl_usuario`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id`);
+  ADD KEY `id_usuario` (`id`),
+  ADD KEY `fk_permissao` (`id_permissao`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT de tabela `tbl_backups`
+-- AUTO_INCREMENT de tabela `tbl_backup`
 --
-ALTER TABLE `tbl_backups`
+ALTER TABLE `tbl_backup`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tbl_backup_equipamento`
+--
+ALTER TABLE `tbl_backup_equipamento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -378,10 +341,16 @@ ALTER TABLE `tbl_configuracao`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `tbl_configuracao_equipamento`
+--
+ALTER TABLE `tbl_configuracao_equipamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `tbl_datacenter`
 --
 ALTER TABLE `tbl_datacenter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_endereco`
@@ -402,12 +371,6 @@ ALTER TABLE `tbl_pagina`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `tbl_perfil`
---
-ALTER TABLE `tbl_perfil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de tabela `tbl_permissao`
 --
 ALTER TABLE `tbl_permissao`
@@ -417,12 +380,24 @@ ALTER TABLE `tbl_permissao`
 -- AUTO_INCREMENT de tabela `tbl_permissao_pagina`
 --
 ALTER TABLE `tbl_permissao_pagina`
-  MODIFY `id_permissao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_rack`
 --
 ALTER TABLE `tbl_rack`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tbl_rack_datacenter`
+--
+ALTER TABLE `tbl_rack_datacenter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `tbl_rack_equipamento`
+--
+ALTER TABLE `tbl_rack_equipamento`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -439,7 +414,7 @@ ALTER TABLE `tbl_usuario`
 -- Limitadores para a tabela `tbl_backup_equipamento`
 --
 ALTER TABLE `tbl_backup_equipamento`
-  ADD CONSTRAINT `fk_backup_equipamento` FOREIGN KEY (`id_backup`) REFERENCES `tbl_backups` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_backup_equipamento` FOREIGN KEY (`id_backup`) REFERENCES `tbl_backup` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_equipamento_backup` FOREIGN KEY (`id_equipamento`) REFERENCES `tbl_equipamento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -454,20 +429,6 @@ ALTER TABLE `tbl_configuracao_equipamento`
 --
 ALTER TABLE `tbl_datacenter`
   ADD CONSTRAINT `fk_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `tbl_endereco` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Limitadores para a tabela `tbl_perfil_usuario`
---
-ALTER TABLE `tbl_perfil_usuario`
-  ADD CONSTRAINT `fk_perfil_usuario` FOREIGN KEY (`id_perfil`) REFERENCES `tbl_perfil` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_usuario_perfil` FOREIGN KEY (`id_usuario`) REFERENCES `tbl_usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Limitadores para a tabela `tbl_permisao_perfil`
---
-ALTER TABLE `tbl_permisao_perfil`
-  ADD CONSTRAINT `fk_perfil_permissao` FOREIGN KEY (`id_perfil`) REFERENCES `tbl_perfil` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_permissao_perfil` FOREIGN KEY (`id_permissao`) REFERENCES `tbl_permissao` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tbl_permissao_pagina`
@@ -489,6 +450,12 @@ ALTER TABLE `tbl_rack_datacenter`
 ALTER TABLE `tbl_rack_equipamento`
   ADD CONSTRAINT `fk_equipamento_rack` FOREIGN KEY (`id_equipamento`) REFERENCES `tbl_equipamento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_rack_equipamento` FOREIGN KEY (`id_rack`) REFERENCES `tbl_rack` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `tbl_usuario`
+--
+ALTER TABLE `tbl_usuario`
+  ADD CONSTRAINT `fk_permissao` FOREIGN KEY (`id_permissao`) REFERENCES `tbl_permissao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
