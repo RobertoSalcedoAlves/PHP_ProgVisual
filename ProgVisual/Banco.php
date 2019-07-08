@@ -7,33 +7,32 @@ class Banco{
         private $msg1;
         private $nome_db;
         private $db;
+        private $mysqli;
         public function __construct(){
             $this->local    =       'localhost';
             $this->user     =       'root';
             $this->senha    =       'teste';
-            $this->msg0     =       'Erro de conexão: '.mysql_error();
+            $this->msg0     =       'Erro de conexão: ';
             $this->msg1     =       'Não foi possível selecionar o banco de dados!';
             $this->nome_db  =       'basedados';
         }
-        public function abrir(){
-            $this->db = mysql_connect($this->local,$this->user,$this->senha) or die($this->msg0);
-            mysql_select_db($this->nome_db,$this->db) or die($this->msg1);
+        protected function conectaDB(){
+            try{
+                $con=new mysqli($this->local,$this->user,$this->senha,$this->nome_db);
+                return $con;
+            } catch (Exception $ex) { $ex->getMessage(); }
         }
-        public function fechar(){
-            //analisar se o mysql_close precisa ser colocado numa variável
-            //$closed = mysql_close($this->db);
-            //$closed = NULL;
-            mysql_close($this->db);
-        }
+        public function fechar(){ mysqli_close($this->db); }
+        
         public function inserirNoBanco($objeto){ 
             $db = new Banco();
-            $db->abrir();
+            $conexao = $db->conectaDB();
             $sql = "INSERT INTO ".$objeto->getNomeTabela()."(".$objeto->getNomeCampos().") VALUES ( ".$objeto->getValorCampos().")";
-            $query = mysql_query($sql) or die ($sql.' '.mysql_error());
+            $query = mysqli_query($conexao, $sql) or die ('Erro ao gravar no banco.');
             $db->fechar(); 
             $temp_id = explode('_',$objeto->getNomeTabela());
             unset($objeto);
-            header('location: '.$temp_id[1].'.php?msg=Inserido');
+            header('location: ./Views/'.$temp_id[1].'.php?msg=Inserido');
         }
         private function BuscaValor($campo,$tb_name,$fields_where,$values_where){ 
             $qtd = count($fields_where);
@@ -54,8 +53,8 @@ class Banco{
                         if ($j<$qtd )  { $sql .= ' and '; }
                     }
                 } //=======================================
-                $res = mysql_query($sql) or die ($sql .mysql_error());
-                $linha = mysql_fetch_array($res);
+                $res = mysqli_query($sql) or die ($sql .mysqli_error());
+                $linha = mysqli_fetch_array($res);
                 return $linha[$campo]; // retorna o valor do campo especifico, com os parametros enviados (podendo ser nenhum ou vários)
             }//else
         }//public function
@@ -64,12 +63,13 @@ class Banco{
             $obj = explode('_',$tb_name);
             $new_objeto = new $obj[1];
             $db = new Banco();
-            $db->abrir();
-            $fields = mysql_list_fields($this->nome_db,$tb_name); // informa os fields/campos da tabela do banco
-            $columns = mysql_num_fields($fields); //conta o número de campos
+            $conexao = $db->conectaDB();
+            //$db->abrir();
+            $fields = mysqli_list_fields($this->nome_db,$tb_name); // informa os fields/campos da tabela do banco
+            $columns = mysqli_num_fields($fields); //conta o número de campos
             for ($i = 0; $i < $columns; $i++) {
-                $fields_name    = mysql_field_name($fields, $i);
-                $fields_values = $this->BuscaValor(mysql_field_name($fields, $i),$tb_name,$fields_where,$values_where); 
+                $fields_name    = mysqli_field_name($fields, $i);
+                $fields_values = $this->BuscaValor(mysqli_field_name($fields, $i),$tb_name,$fields_where,$values_where); 
                 $new_objeto->$fields_name = $fields_values;
             }
             $db->fechar();
@@ -79,7 +79,8 @@ class Banco{
             $obj = explode('_',$tb_name);
             $qtd = count($fields_where);
             $db = new Banco();
-            $db->abrir();
+            $conexao = $db->conectaDB();
+            //$db->abrir();
 
             // <Monta a string SQL> =====================
             $sql = "SELECT id_".$obj[1]." FROM ".$tb_name;
@@ -91,18 +92,18 @@ class Banco{
                 }
             } //==================== </Monta a string SQL>
 
-            $query = mysql_query($sql) or die ($sql .mysql_error());
+            $query = mysqli_query($sql) or die ($sql .mysqli_error());
             $h = 0; // inicializamos a variável
             // Laço que trará TODOS os objetos já alimentados
-            while ($linha = mysql_fetch_array($query)){
+            while ($linha = mysqli_fetch_array($query)){
                 $objDTO = new $obj[1];
                 $fields_where[$qtd+1] = 'id_'.$obj[1];
                 $values_where[$qtd+1] = $linha[$fields_where[$qtd+1]];
-                $fields = mysql_list_fields($this->nome_db,$tb_name); // informa os fields/campos da tabela do banco
-                $columns = mysql_num_fields($fields); //conta o número de campos
+                $fields = mysqli_list_fields($this->nome_db,$tb_name); // informa os fields/campos da tabela do banco
+                $columns = mysqli_num_fields($fields); //conta o número de campos
                 $new_objeto[$h] = clone $objDTO; //Aqui declaramos um novo objeto que é clone de nosso DAO, no momento sendo apenas um DTO.
                 for ($i = 0; $i < $columns; $i++) {
-                        $fields_name    = mysql_field_name($fields, $i);
+                        $fields_name    = mysqli_field_name($fields, $i);
                         $fields_values = $this->BuscaValor(mysql_field_name($fields, $i),$tb_name,$fields_where,$values_where);
                         $new_objeto[$h]->$fields_name = $fields_values;
                 }

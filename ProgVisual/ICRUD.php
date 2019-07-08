@@ -1,6 +1,5 @@
 <?php
 interface ICRUD {
-    public function setDados();
     public function getId();
     public function getNomeTabela();
     public function getNomeCampos();
