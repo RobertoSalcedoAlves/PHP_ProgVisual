@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08-Jul-2019 às 03:20
--- Versão do servidor: 10.3.15-MariaDB
+-- Tempo de geração: 08-Jul-2019 às 14:39
+-- Versão do servidor: 10.3.16-MariaDB
 -- versão do PHP: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -65,6 +65,14 @@ CREATE TABLE `tbl_configuracao` (
   `data_fim` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tbl_configuracao`
+--
+
+INSERT INTO `tbl_configuracao` (`Id`, `lag`, `ip`, `vlan`, `ospf`, `mpls`, `pppoe_server`, `ativa`, `data_inicio`, `data_fim`) VALUES
+(1, 'teste lag', '127.0.0.1', 1234, 'testes ospf', 1, 1, 1, '2019-07-08', '2019-07-22'),
+(2, 'teste lag 2', '127.0.0.2', 12345, 'testes ospf', 2, 2, 2, '2019-07-01', '2019-07-08');
+
 -- --------------------------------------------------------
 
 --
@@ -77,6 +85,14 @@ CREATE TABLE `tbl_configuracao_equipamento` (
   `id_equipamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tbl_configuracao_equipamento`
+--
+
+INSERT INTO `tbl_configuracao_equipamento` (`id`, `id_configuracao`, `id_equipamento`) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -87,6 +103,14 @@ CREATE TABLE `tbl_datacenter` (
   `id` int(11) NOT NULL,
   `id_endereco` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tbl_datacenter`
+--
+
+INSERT INTO `tbl_datacenter` (`id`, `id_endereco`) VALUES
+(15, 1),
+(16, 3);
 
 -- --------------------------------------------------------
 
@@ -107,7 +131,8 @@ CREATE TABLE `tbl_endereco` (
 --
 
 INSERT INTO `tbl_endereco` (`id`, `uf`, `cidade`, `rua`, `numero`) VALUES
-(1, 'rs', 'caxias', 'das flores', 77);
+(1, 'rs', 'caxias', 'das flores', 77),
+(3, 'rs', 'Bagé', 'eucaliptos', 777);
 
 -- --------------------------------------------------------
 
@@ -123,6 +148,14 @@ CREATE TABLE `tbl_equipamento` (
   `prefixo_backup` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tbl_equipamento`
+--
+
+INSERT INTO `tbl_equipamento` (`id`, `num_serie`, `identity`, `versao_firmware`, `prefixo_backup`) VALUES
+(1, 'a0001', 'teste identity', 'teste v. firmware', 'teste prefixo backp'),
+(2, 'a0002', 'teste identity2', 'teste v. firmware2', 'teste prefixo backp2');
+
 -- --------------------------------------------------------
 
 --
@@ -135,6 +168,19 @@ CREATE TABLE `tbl_pagina` (
   `descricao` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tbl_pagina`
+--
+
+INSERT INTO `tbl_pagina` (`id`, `nome`, `descricao`) VALUES
+(1, 'UsuarioCAD', 'Cadastro de usuários'),
+(2, 'Usuario', 'Visualização de usuários'),
+(3, 'equipamentoCAD', 'Cadastro de equipamentos'),
+(4, 'equipamento', 'Visualização de equipamentos'),
+(5, 'login', 'Página de Login'),
+(6, 'index', 'Página home'),
+(7, 'todas', 'Todas as páginas da aplicação');
+
 -- --------------------------------------------------------
 
 --
@@ -145,6 +191,14 @@ CREATE TABLE `tbl_permissao` (
   `id` int(11) NOT NULL,
   `descricao` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tbl_permissao`
+--
+
+INSERT INTO `tbl_permissao` (`id`, `descricao`) VALUES
+(1, 'administrador'),
+(2, 'usuario');
 
 -- --------------------------------------------------------
 
@@ -158,6 +212,14 @@ CREATE TABLE `tbl_permissao_pagina` (
   `id_pagina` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `tbl_permissao_pagina`
+--
+
+INSERT INTO `tbl_permissao_pagina` (`id`, `id_permissao`, `id_pagina`) VALUES
+(3, 1, 7),
+(4, 2, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -168,6 +230,16 @@ CREATE TABLE `tbl_rack` (
   `id` int(11) NOT NULL,
   `identificador` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tbl_rack`
+--
+
+INSERT INTO `tbl_rack` (`id`, `identificador`) VALUES
+(1, 'rack1'),
+(2, 'rack2'),
+(3, 'rack3'),
+(4, 'rack4');
 
 -- --------------------------------------------------------
 
@@ -180,6 +252,16 @@ CREATE TABLE `tbl_rack_datacenter` (
   `id_datacenter` int(11) NOT NULL,
   `IdRack` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tbl_rack_datacenter`
+--
+
+INSERT INTO `tbl_rack_datacenter` (`id`, `id_datacenter`, `IdRack`) VALUES
+(1, 15, 1),
+(2, 15, 2),
+(3, 16, 3),
+(4, 16, 4);
 
 -- --------------------------------------------------------
 
@@ -208,6 +290,14 @@ CREATE TABLE `tbl_usuario` (
   `telefone` varchar(20) NOT NULL,
   `id_permissao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tbl_usuario`
+--
+
+INSERT INTO `tbl_usuario` (`id`, `nome`, `login`, `senha`, `email`, `telefone`, `id_permissao`) VALUES
+(1, 'Bruno Wrezinski', 'bruno', '1234', 'bruno@bruno.com', '(54)991000000', 1),
+(2, 'Roberto Salcedo', 'roberto', '1234', 'roberto@roberto.com', '(54)991003627', 2);
 
 --
 -- Índices para tabelas despejadas
@@ -338,61 +428,61 @@ ALTER TABLE `tbl_backup_equipamento`
 -- AUTO_INCREMENT de tabela `tbl_configuracao`
 --
 ALTER TABLE `tbl_configuracao`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_configuracao_equipamento`
 --
 ALTER TABLE `tbl_configuracao_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_datacenter`
 --
 ALTER TABLE `tbl_datacenter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_endereco`
 --
 ALTER TABLE `tbl_endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_equipamento`
 --
 ALTER TABLE `tbl_equipamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_pagina`
 --
 ALTER TABLE `tbl_pagina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_permissao`
 --
 ALTER TABLE `tbl_permissao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_permissao_pagina`
 --
 ALTER TABLE `tbl_permissao_pagina`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_rack`
 --
 ALTER TABLE `tbl_rack`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_rack_datacenter`
 --
 ALTER TABLE `tbl_rack_datacenter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `tbl_rack_equipamento`
@@ -404,7 +494,7 @@ ALTER TABLE `tbl_rack_equipamento`
 -- AUTO_INCREMENT de tabela `tbl_usuario`
 --
 ALTER TABLE `tbl_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para despejos de tabelas
@@ -414,7 +504,7 @@ ALTER TABLE `tbl_usuario`
 -- Limitadores para a tabela `tbl_backup_equipamento`
 --
 ALTER TABLE `tbl_backup_equipamento`
-  ADD CONSTRAINT `fk_backup_equipamento` FOREIGN KEY (`id_backup`) REFERENCES `tbl_backup` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_backup_equipamento` FOREIGN KEY (`id_backup`) REFERENCES `tbl_backup` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_equipamento_backup` FOREIGN KEY (`id_equipamento`) REFERENCES `tbl_equipamento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -428,7 +518,7 @@ ALTER TABLE `tbl_configuracao_equipamento`
 -- Limitadores para a tabela `tbl_datacenter`
 --
 ALTER TABLE `tbl_datacenter`
-  ADD CONSTRAINT `fk_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `tbl_endereco` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `tbl_endereco` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tbl_permissao_pagina`
@@ -441,15 +531,15 @@ ALTER TABLE `tbl_permissao_pagina`
 -- Limitadores para a tabela `tbl_rack_datacenter`
 --
 ALTER TABLE `tbl_rack_datacenter`
-  ADD CONSTRAINT `fk_datacenter_rack` FOREIGN KEY (`id_datacenter`) REFERENCES `tbl_datacenter` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rack_datacenter` FOREIGN KEY (`IdRack`) REFERENCES `tbl_rack` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_datacenter_rack` FOREIGN KEY (`id_datacenter`) REFERENCES `tbl_datacenter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rack_datacenter` FOREIGN KEY (`IdRack`) REFERENCES `tbl_rack` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tbl_rack_equipamento`
 --
 ALTER TABLE `tbl_rack_equipamento`
   ADD CONSTRAINT `fk_equipamento_rack` FOREIGN KEY (`id_equipamento`) REFERENCES `tbl_equipamento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rack_equipamento` FOREIGN KEY (`id_rack`) REFERENCES `tbl_rack` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_rack_equipamento` FOREIGN KEY (`id_rack`) REFERENCES `tbl_rack` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `tbl_usuario`

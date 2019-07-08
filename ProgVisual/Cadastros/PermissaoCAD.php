@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">                
-        <title>Cadastro de Usuário</title>
+        <title>Permissões</title>
     </head>
     <body>
         <div class="container"  style="width:40%;">
@@ -16,7 +16,7 @@
                 $qtd = count($link); echo '<br>';
             ?>
             <form action="<?php echo $link[$qtd-1]; ?>" method="post" class="form-signin">
-                <h1 class="h3 mb-3 font-weight-normal">Cadastro de Usuários</h1>
+                <h1 class="h3 mb-3 font-weight-normal">Cadastro de Permissões</h1>
 
                 <label for="txtNome" class="sr-only">Nome</label>
                 <input name="txtNome" type="text" id="txtNome" size="50" class="form-control" placeholder="Nome" required autofocus>

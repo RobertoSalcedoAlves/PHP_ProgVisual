@@ -11,7 +11,7 @@ class Banco{
         public function __construct(){
             $this->local    =       'localhost';
             $this->user     =       'root';
-            $this->senha    =       'teste';
+            $this->senha    =       '';
             $this->msg0     =       'Erro de conexão: ';
             $this->msg1     =       'Não foi possível selecionar o banco de dados!';
             $this->nome_db  =       'basedados';
@@ -32,9 +32,9 @@ class Banco{
             $db->fechar(); 
             $temp_id = explode('_',$objeto->getNomeTabela());
             unset($objeto);
-            header('location: ./Views/'.$temp_id[1].'.php?msg=Inserido');
+            header('location: ../Views/'.$temp_id[1].'.php?msg=Inserido');
         }
-        private function BuscaValor($campo,$tb_name,$fields_where,$values_where){ 
+        private function BuscaValor($campo,$tb_name,$fields_where,$values_where, $conexao){ 
             $qtd = count($fields_where);
             if ($qtd != count($values_where)){ // verifica o numero de fields e values 
                 ?>
@@ -53,7 +53,7 @@ class Banco{
                         if ($j<$qtd )  { $sql .= ' and '; }
                     }
                 } //=======================================
-                $res = mysqli_query($sql) or die ($sql .mysqli_error());
+                $res = mysqli_query($conexao,$sql) or die ($sql .mysqli_error($conexao));
                 $linha = mysqli_fetch_array($res);
                 return $linha[$campo]; // retorna o valor do campo especifico, com os parametros enviados (podendo ser nenhum ou vários)
             }//else
@@ -65,11 +65,11 @@ class Banco{
             $db = new Banco();
             $conexao = $db->conectaDB();
             //$db->abrir();
-            $fields = mysqli_list_fields($this->nome_db,$tb_name); // informa os fields/campos da tabela do banco
+            $fields =  mysqli_query($conexao,'SHOW COLUMNS FROM ' .$tb_name); // informa os fields/campos da tabela do banco
             $columns = mysqli_num_fields($fields); //conta o número de campos
             for ($i = 0; $i < $columns; $i++) {
-                $fields_name    = mysqli_field_name($fields, $i);
-                $fields_values = $this->BuscaValor(mysqli_field_name($fields, $i),$tb_name,$fields_where,$values_where); 
+                $fields_name    = $fields->name;
+                $fields_values = $this->BuscaValor($fields_name,$tb_name,$fields_where,$values_where,$conexao); 
                 $new_objeto->$fields_name = $fields_values;
             }
             $db->fechar();
@@ -83,28 +83,30 @@ class Banco{
             //$db->abrir();
 
             // <Monta a string SQL> =====================
-            $sql = "SELECT id_".$obj[1]." FROM ".$tb_name;
-            if ($qtd >= 1 ) {
-                for ($j=1;$j<=$qtd;$j++){
-                    if ($j == 1) { $sql .= ' WHERE '; }//garante que o where entre caso tenha algum parametro
-                    $sql .= $fields_where[$j].' = '.$values_where[$j];              
-                    if ($j<$qtd )  { $sql .= ' AND '; }
-                }
-            } //==================== </Monta a string SQL>
+            //$sql = "SELECT id FROM ".$tb_name;
+            $sql = "SELECT * FROM ".$tb_name;
+            //if ($qtd >= 1 ) {
+            //    for ($j=1;$j<=$qtd;$j++){
+            //        if ($j == 1) { $sql .= ' WHERE '; }//garante que o where entre caso tenha algum parametro
+            //        $sql .= $fields_where[$j].' = '.$values_where[$j];              
+            //        if ($j<$qtd )  { $sql .= ' AND '; }
+             //   }
+            //} //==================== </Monta a string SQL>
 
-            $query = mysqli_query($sql) or die ($sql .mysqli_error());
+            $query = mysqli_query($conexao,$sql) or die ($sql .mysqli_error($conexao));
             $h = 0; // inicializamos a variável
             // Laço que trará TODOS os objetos já alimentados
             while ($linha = mysqli_fetch_array($query)){
                 $objDTO = new $obj[1];
-                $fields_where[$qtd+1] = 'id_'.$obj[1];
+                $fields_where[$qtd+1] = 'id';
                 $values_where[$qtd+1] = $linha[$fields_where[$qtd+1]];
-                $fields = mysqli_list_fields($this->nome_db,$tb_name); // informa os fields/campos da tabela do banco
+                $fields =  mysqli_query($conexao,'SHOW COLUMNS FROM ' .$tb_name);
+                //$fields =  mysql_list_fields($this->nome_db,$tb_name,$conexao); // informa os fields/campos da tabela do banco
                 $columns = mysqli_num_fields($fields); //conta o número de campos
                 $new_objeto[$h] = clone $objDTO; //Aqui declaramos um novo objeto que é clone de nosso DAO, no momento sendo apenas um DTO.
                 for ($i = 0; $i < $columns; $i++) {
-                        $fields_name    = mysqli_field_name($fields, $i);
-                        $fields_values = $this->BuscaValor(mysql_field_name($fields, $i),$tb_name,$fields_where,$values_where);
+                        $fields_name   = mysqli_fetch_field_direct($fields, $i);
+                        $fields_values = $this->BuscaValor($fields_name->name,$tb_name,$fields_where,$values_where,$conexao);
                         $new_objeto[$h]->$fields_name = $fields_values;
                 }
                 $h += 1; //chamamos o próximo objeto
